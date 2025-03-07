@@ -18,22 +18,22 @@ TrPy, Python sözdizimindeki kelimeleri Türkçe karşılıkları ile çeviren b
 
 ## README İçerikleri:
 
-* [Key features](#key-features)
+* [Özellikler](#özellikler)
 
-* [Code example](#code-example)
+* [Kod Örneği](#kod-örneği)
 
-* [Installation](#installation)
+* [Yükleme](#yükleme)
 
-* [Keyword mappings](#keyword-mappings)
+* [Sözdizimi Çevirileri](#sözdizimi-çevirileri)
 
-* [Quick intro](#quick-intro)
+* [Hızlı Giriş](#hızlı-giriş)
 
-* [Structure of the repository](#structure-of-the-repository)
+* [Proje Yapısı](#proje-yapısı)
 
   
   
 
-## Key features
+## Özellikler
 
   
 
@@ -112,13 +112,10 @@ $ pip3 uninstall trpy
 Bu işlemler tüm yüklemeleri kaldırır.
   
 
-## Keyword mappings
+## Sözdizimi Çevirileri
 
   
-
-Below is a table of all of the Python keywords or operators that should be replaced by their corresponding PyGyat keyword. Python keywords that don't have a mapping or aren't in this table can just be used as is. If you want to request that a new mapping be made, please submit a pull request.
-
-  Aşağıda tüm Python sözdizimleri ve operatörlerin Türkçe karşılıkları bulunmaktadır. Bu tabloda bulunmayan Python sözdizimleri aynı şekilde kullanılmaya devam edilebilir. Yeni eklemelerin yapılmasını isterseniz pull request açabilirsiniz.
+Aşağıda tüm Python sözdizimleri ve operatörlerin Türkçe karşılıkları bulunmaktadır. Bu tabloda bulunmayan Python sözdizimleri aynı şekilde kullanılmaya devam edilebilir. Yeni eklemelerin yapılmasını isterseniz pull request açabilirsiniz.
 
 | Python Sözdizimi/Operatör | TrPy Çevirisi |
 | Türkçe        | Python Karşılığı |
