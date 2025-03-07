@@ -1,20 +1,26 @@
 from setuptools import setup
-from pygyat import VERSION_NUMBER
+from trpy import VERSION_NUMBER  # Türkçe Python kütüphanesi ismi olarak trpy
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 # Install python package, scripts and manual pages
-setup(name="pygyat",
+setup(name="trpy",  # Türkçe Python kütüphanesi ismi
       version=VERSION_NUMBER,
-      author="Shamith Pasula",
-      author_email="shamith09@berkeley.edu",
+      author="Ali Can Gündüz",
+      author_email="ac.gunduz7878@gmail.com",
       license="MIT",
-      description="Python with rizz",
+      description="Türk milletinin dili Türkçedir." +
+        "Türk dili dünyada en güzel, en zengin ve en kolay olabilecek bir dildir." +
+        "Onun için her Türk, dilini çok sever ve onu yükseltmek için çalışır…" +
+        "Türk dili, Türk milleti için kutsal bir hazinedir." +
+        "Çünkü Türk milleti geçirdiği sayısız felaketler içinde ahlâkının, geleneklerinin, hatıralarının, çıkarlarının," +
+        "kısaca bugün kendi milliyetini yapan her şeyin dili sayesinde korunduğunu görüyor." +
+        "Türk dili, Türk milletinin kalbidir, zihnidir.",
       long_description=long_description,
       long_description_content_type="text/markdown",
-      url="https://github.com/shamith09/pygyat",
-      scripts=["scripts/gyat2py", "scripts/pygyat", "scripts/py2gyat"],
-      data_files=[("man/man1", ["etc/pygyat.1", "etc/py2gyat.1", "etc/gyat2py.1"])],
-      packages=["pygyat"],
+      url="https://github.com/al1can/türkçe_python",  # GitHub URL'si de değiştirildi
+      scripts=["scripts/trpy2py", "scripts/trpy", "scripts/py2trpy"],  # Türkçe versiyon script'leri
+      data_files=[("man/man1", ["etc/trpy.1", "etc/py2trpy.1", "etc/trpy2py.1"])],
+      packages=["trpy"],  # Türkçe Python kütüphanesi ismi olarak trpy
       zip_safe=False)

@@ -5,34 +5,34 @@ import argparse
 import sys
 from tokenize import tokenize, tok_name, INDENT, DEDENT, NAME
 
-from pygyat import VERSION_NUMBER, GYAT2PY_MAPPINGS
-from pygyat.logger import Logger
+from trpy import VERSION_NUMBER, TRPY2PY_MAPPINGS
+from trpy.logger import Logger
 
 
-def ends_in_py(word):
+def ends_in_trpy(word):
     """
-    Returns True if word ends in .py, else False
+    Returns True if word ends in .trpy, else False
 
     Args:
         word (str):     Filename to check
 
     Returns:
-        boolean: Whether 'word' ends with 'py' or not
+        boolean: Whether 'word' ends with 'trpy' or not
     """
-    return word[-3:] == ".py"
+    return word[-5:] == ".trpy"
 
 
 def change_file_name(name, outputname=None):
     """
-    Changes *.py filenames to *.gyat filenames. If filename does not end in .py,
-    it adds .gyat to the end.
+    Changes *.py filenames to *.trpy filenames. If filename does not end in .py,
+    it adds .trpy to the end.
 
     Args:
         name (str):         Filename to edit
         outputname (str):   Optional. Overrides result of function.
 
     Returns:
-        str: Resulting filename with *.gyat at the end (unless 'outputname' is
+        str: Resulting filename with *.trpy at the end (unless 'outputname' is
         specified, then that is returned).
     """
     # If outputname is specified, return that
@@ -40,10 +40,10 @@ def change_file_name(name, outputname=None):
         return outputname
 
     # Otherwise, create a new name
-    if ends_in_py(name):
-        return name[:-3] + ".gyat"
+    if ends_in_trpy(name):
+        return name[:-5] + ".trpy"
     else:
-        return name + ".gyat"
+        return name + ".trpy"
 
 
 def translate_dictionary(definition_string):
@@ -56,7 +56,7 @@ def translate_dictionary(definition_string):
 
     Returns:
         str: An equivalent definition (including '='), but using the
-        dict()-contructor instead of { and }
+        dict()-constructor instead of { and }
     """
     # Remove = before definition
     definition_string = re.sub(r"\s*=\s*", "", definition_string)
@@ -114,11 +114,11 @@ def pre_reverse_parse(infile_string):
 
 def safe_substitute(value, deescaped_key, line):
     """
-    Performs Python token substitution on a Pygyat line, but ignores tokens inside of strings.
+    Performs token substitution on a TrPy line, but ignores tokens inside of strings.
     TODO: Can be extended to ignore tokens inside of comments as well.
 
     Args:
-        value (str):             Pygyat token
+        value (str):             TrPy token
         deescaped_key (str):     Python token
         line (str):              Code line
 
@@ -144,7 +144,7 @@ def safe_substitute(value, deescaped_key, line):
 
 def reverse_parse(filename, outputname):
     """
-    Changes a Python file to a PyGyat file
+    Changes a Python file to a TrPy file
 
     All semantically significant whitespace resulting in a change
     in indentation levels will have a matching opening or closing
@@ -187,9 +187,9 @@ def reverse_parse(filename, outputname):
             infile_str_indented += add_comment + "\n"
             continue
 
-        # disallow PyGyat in original Python file
+        # disallow TrPy in original Python file
         # replace anything in mappings.keys() with its value but opposite
-        for value, key in GYAT2PY_MAPPINGS.items():
+        for value, key in TRPY2PY_MAPPINGS.items():
             if "\\s" in value:
                 value = value.replace("\\s+", " ")
             line = safe_substitute(value, key, line)
@@ -206,22 +206,22 @@ def reverse_parse(filename, outputname):
 
 def main():
     """
-    Translate python to pygyat
+    Translate python to trpy
 
     Command line utility and Python module for translating python code
-    to pygyat code, adding curly braces at semantically significant
+    to trpy code, adding curly braces at semantically significant
     indentations.
     """
     argparser = argparse.ArgumentParser(
-        "py2gyat",
-        description="py2gyat translates python to pygyat",
+        "py2trpy",
+        description="py2trpy translates python to trpy",
         formatter_class=argparse.RawTextHelpFormatter,
     )
     argparser.add_argument(
         "-v",
         "--version",
         action="version",
-        version="py2gyat is a part of PyGyat v%s\nShamith Pasula 2024" % VERSION_NUMBER,
+        version="py2trpy is a part of TrPy v%s\nAli Can Gündüz 2025" % VERSION_NUMBER,
     )
     argparser.add_argument(
         "-o", "--output", type=str, help="specify name of output file", nargs=1
@@ -243,14 +243,14 @@ def main():
         infile_string = "".join(infile.readlines())
 
         # pre_parsed = pre_reverse_parse(infile_string)
-        tempoutfile = open(cmd_args.input[0] + ".py2gyattemp", "w", encoding="utf-8")
+        tempoutfile = open(cmd_args.input[0] + ".py2trpytemp", "w", encoding="utf-8")
         # tempoutfile.write(pre_parsed)
         tempoutfile.write(infile_string)
         tempoutfile.close()
 
-        reverse_parse(cmd_args.input[0] + ".py2gyattemp", outputname)
+        reverse_parse(cmd_args.input[0] + ".py2trpytemp", outputname)
 
-        os.remove(cmd_args.input[0] + ".py2gyattemp")
+        os.remove(cmd_args.input[0] + ".py2trpytemp")
 
     except FileNotFoundError:
         logger.log_error("No file named %s" % cmd_args.input[0])

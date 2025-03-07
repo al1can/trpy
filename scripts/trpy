@@ -1,0 +1,184 @@
+#! /usr/bin/env python3
+import argparse
+import os
+import sys
+
+import trpy.parser as parser  # trpy olarak değiştirildi
+from trpy.logger import Logger  # trpy olarak değiştirildi
+from trpy import VERSION_NUMBER  # trpy olarak değiştirildi
+
+"""
+TrPy, Türk milletinin dili Türkçedir. Türk dili dünyada en güzel, en zengin ve en kolay olabilecek bir dildir. Onun için her Türk, dilini çok sever ve onu yükseltmek için çalışır… Türk dili, Türk milleti için kutsal bir hazinedir. Çünkü Türk milleti geçirdiği sayısız felaketler içinde ahlâkının, geleneklerinin, hatıralarının, çıkarlarının, kısaca bugün kendi milliyetini yapan her şeyin dili sayesinde korunduğunu görüyor. Türk dili, Türk milletinin kalbidir, zihnidir.
+
+Bu, trpy dosyalarını çevirmek ve çalıştırmak için bir komut satırı aracıdır.
+
+Bayraklar ve argümanlar:
+    -V, --version:      Sürüm numarasını yazdır
+    -v, --verbose:      İlerleme bilgisi yazdır
+    -c, --compile:      Sadece python dosyasına çevir ve sakla; çalıştırma
+    -k, --keep:         Üretilen python dosyalarını sakla
+    -2, --python2:      Python2 kullan (varsayılan olarak python3 kullanılır)
+    -o, --output:       Çıktı dosyasının adını belirt (eğer -c seçeneği varsa)
+    input,              İşlenecek trpy dosyaları
+    args,               Script'e verilen argümanlar
+"""
+
+def main():
+    # Argüman ayrıştırıcıyı ayarla
+    argparser = argparse.ArgumentParser("trpy", 
+        description="trpy, Python için bir ön işleyicidir ve süslü parantezleri girintiye çevirir", 
+        formatter_class=argparse.RawTextHelpFormatter)
+    argparser.add_argument("-V", "--version", 
+        action="version", 
+        version="trpy v%s\nShamith Pasula 2024" % VERSION_NUMBER)
+    argparser.add_argument("-v", "--verbose", 
+        help="İlerleme bilgisi yazdır",
+        action="store_true") 
+    argparser.add_argument("-c", "--compile", 
+        help="sadece python'a çevir (dosyaları çalıştırma)",
+        action="store_true")
+    argparser.add_argument("-k", "--keep",
+        help="üretilecek python dosyalarını sakla",
+        action="store_true")
+    argparser.add_argument("-2", "--python2",
+        help="python3 yerine python2 kullan (varsayılan)",
+        action="store_true")
+    argparser.add_argument("-o", "--output",
+        type=str, 
+        help="çıktı dosyasının adını belirt (eğer -c seçeneği varsa)",
+        nargs=1)
+    argparser.add_argument("input",
+        type=str, 
+        help="işlenecek trpy dosyaları",
+        nargs=1)
+    argparser.add_argument("args",
+        type=str,
+        help="script'e verilen argümanlar",
+        nargs=argparse.REMAINDER)
+
+    # Argümanları ayrıştır
+    cmd_args = argparser.parse_args()
+
+    # Logger oluştur
+    logger = Logger(cmd_args.verbose)
+
+    # Geçersiz bayrak kombinasyonlarını kontrol et
+    if cmd_args.output is not None and cmd_args.compile is False:
+        logger.log_error("trpy modunda değilken çıktı dosyasını belirtmek mümkün değil")
+        sys.exit(1)
+
+    # Dosyaların nereye çıkacağı
+    if cmd_args.compile or cmd_args.keep:
+        # Herhangi bir yol eklemeden
+        path_prefix = ""
+        logger.log_info("Dosyalar bu dizine yerleştirilecek")
+
+    else:
+        # . ile gizle, ayrıca isim çakışmalarını engellemek için
+        path_prefix = "python_"
+        logger.log_info("Dosyalar bu dizine yerleştirilecek ancak python_* ile ön ek eklenerek")
+
+    # Trpy'den Python'a çevrilecek dosyaların listesi
+    parse_que = []
+
+    # Komut satırından gelen tüm dosyaları ekle
+    parse_que.append(cmd_args.input[0])
+    if cmd_args.compile:
+        for arg in cmd_args.args:
+            parse_que.append(arg)
+
+    # İthalatları ekle, ve ithalatların ithalatlarını (ve benzerlerini) ekle
+    logger.log_info("İthalatları tarıyor")
+    i = 0
+    while i < len(parse_que):
+        try:
+            import_files = parser.parse_glazes(parse_que[i])
+
+        except FileNotFoundError:
+            logger.log_error("'%s' adıyla dosya bulunamadı" % parse_que[i])
+            sys.exit(1)
+
+        for import_file in import_files:
+            if os.path.isfile(import_file) and not import_file in parse_que:
+                logger.log_info("'%s' dosyasını parse kuyruğuna ekliyor" % import_file)
+                parse_que.append(import_file)
+
+        i += 1
+
+    if path_prefix != "":
+        import_translations = {}
+        for file in parse_que:
+            import_translations[file[:-5]] = path_prefix + file[:-5]
+
+    else:
+        import_translations = None
+
+    # Parsing
+    try:
+        for file in parse_que:
+            current_file_name = file
+            logger.log_info("Parsing '%s'" % file)
+
+            if cmd_args.output is None:
+                outputname = None
+            elif os.path.isdir(cmd_args.output[0]):
+                new_file_name = parser._change_file_name(os.path.split(file)[1])
+                outputname = os.path.join(cmd_args.output[0], new_file_name)
+            else:
+                outputname = cmd_args.output[0]
+
+            parser.parse_file(file, path_prefix, outputname, import_translations)
+
+    except (TypeError, FileNotFoundError) as e:
+        logger.log_error("'%s' dosyasını parse ederken hata oluştu.\n%s" % (current_file_name, str(e)))
+        # Temizleme
+        try:
+            for file in parse_que:
+                os.remove(path_prefix + parser._change_file_name(file, None))
+        except:
+            pass
+
+        raise e
+        sys.exit(1)
+
+    # Yalnızca çevirmeyi istedikse dur
+    if cmd_args.compile:
+        return
+
+    # Dosyayı çalıştır
+    if cmd_args.python2:
+        python_command = "python2"
+
+    else:
+        python_command = "python3"
+
+    filename = os.path.basename(cmd_args.input[0])
+
+    try:
+        logger.log_info("Çalıştırılıyor")
+        logger.program_header()
+        os.system("%s %s %s" % (
+            python_command,
+            path_prefix + parser._change_file_name(filename, None),
+            " ".join(arg for arg in cmd_args.args))
+        )
+        logger.program_footer()
+
+    except Exception as e:
+        logger.log_error("Python çalıştırılırken beklenmedik hata")
+        logger.log_info("Rapor edilen hata mesajı: %s" % str(e))
+
+    # Dosyayı silme (istek üzerine)
+    try:
+        if not cmd_args.keep:
+            logger.log_info("Dosyalar siliniyor")
+            for file in parse_que:
+                filename = os.path.basename(file)
+                os.remove(path_prefix + parser._change_file_name(filename, None))
+
+    except:
+        logger.log_error("Oluşturulan python dosyaları silinemedi.\nBazı gereksiz dosyalar ~/.trpytemp/ dizininde kalabilir")
+
+
+if __name__ == '__main__':
+    main()

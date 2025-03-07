@@ -1,0 +1,12 @@
+fonksiyon fizz_buzz():
+    için i içinde aralık(1, 101):
+        eğer i % 3 eşit 0 ve i % 5 eşit 0:
+            konuş("FizzBuzz")
+        değilse i % 3 eşit 0:
+            konuş("Fizz")
+        değilse i % 5 eşit 0:
+            konuş("Buzz")
+        yoksa:
+            konuş(i)
+
+fizz_buzz()

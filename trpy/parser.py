@@ -1,29 +1,29 @@
 import re
 import os
 
-from pygyat import GYAT2PY_MAPPINGS
+from trpy import TRPY2PY_MAPPINGS
 
 """
-Python module for converting pygyat code to python code.
+Python module for converting Trpy code to python code.
 """
 
 
-def _ends_in_gyat(word):
+def _ends_in_trpy(word):
     """
-    Returns True if word ends in .gyat, else False
+    Returns True if word ends in .trpy, else False
 
     Args:
         word (str):     Filename to check
 
     Returns:
-        boolean: Whether 'word' ends with 'gyat' or not
+        boolean: Whether 'word' ends with 'trpy' or not
     """
-    return word[-5:] == ".gyat"
+    return word[-5:] == ".trpy"
 
 
 def _change_file_name(name, outputname=None):
     """
-    Changes *.gyat filenames to *.py filenames. If filename does not end in .gyat,
+    Changes *.trpy filenames to *.py filenames. If filename does not end in .trpy,
     it adds .py to the end.
 
     Args:
@@ -40,7 +40,7 @@ def _change_file_name(name, outputname=None):
         return outputname
 
     # Otherwise, create a new name
-    if _ends_in_gyat(name):
+    if _ends_in_trpy(name):
         return name[:-5] + ".py"
 
     else:
@@ -50,14 +50,14 @@ def _change_file_name(name, outputname=None):
 def parse_glazes(filename):
     """
     Reads the file, and scans for imports. Returns all the assumed filename
-    of all the imported modules (ie, module name appended with ".gyat")
+    of all the imported modules (ie, module name appended with ".trpy")
 
     Args:
         filename (str):     Path to file
 
     Returns:
-        list of str: All imported modules, suffixed with '.gyat'. Ie, the name
-        the imported files must have if they are pygyat files.
+        list of str: All imported modules, suffixed with '.trpy'. Ie, the name
+        the imported files must have if they are Trpy files.
     """
     infile = open(filename, "r", encoding="utf-8")
     infile_str = ""
@@ -68,23 +68,23 @@ def parse_glazes(filename):
     glazes = re.findall(r"(?<=glaze\s)[\w.]+(?=;|\s|$)", infile_str)
     glazes2 = re.findall(r"(?<=lock in\s)[\w.]+(?=\s+glaze)", infile_str)
 
-    glazes_with_suffixes = [im + ".gyat" for im in glazes + glazes2]
+    glazes_with_suffixes = [im + ".trpy" for im in glazes + glazes2]
 
     return glazes_with_suffixes
 
 
 def safe_substitute(value, deescaped_key, line):
     """
-    Performs Pygyat token substitution on a line, but ignores tokens inside of strings.
+    Performs Trpy token substitution on a line, but ignores tokens inside of strings.
     TODO: Can be extended to ignore tokens inside of comments as well.
 
     Args:
         value (str):             Python token
-        deescaped_key (str):     Pygyat token
+        deescaped_key (str):     Trpy token
         line (str):              Code line
 
     Returns:
-        Code line with safe Pygyat token substitutions
+        Code line with safe Trpy token substitutions
     """
     string_pattern = r"""
         (?P<string>(['"])(?:\\.|(?!\2).)*\2)  # Match single or double-quoted strings
@@ -104,17 +104,17 @@ def safe_substitute(value, deescaped_key, line):
 
 def parse_file(filepath, filename_prefix, outputname=None, change_imports=None):
     """
-    Converts a pygyat file to a python file and writes it to disk.
+    Converts a Trpy file to a python file and writes it to disk.
 
     Args:
-        filename (str):             Path to the pygyat file you want to parse.
+        filename (str):             Path to the Trpy file you want to parse.
         filename_prefix (str):      Prefix to resulting file name (if -c or -k
                                     is not present, then the files are prefixed
                                     with a '.').
         outputname (str):           Optional. Override name of output file. If
-                                    omitted it defaults to substituting '.gyat' to
+                                    omitted it defaults to substituting '.trpy' to
                                     '.py'
-        change_imports (dict):      Names of imported pygyat modules, and their
+        change_imports (dict):      Names of imported Trpy modules, and their
                                     python alternative.
     """
     filename = os.path.basename(filepath)
@@ -153,7 +153,7 @@ def parse_file(filepath, filename_prefix, outputname=None, change_imports=None):
 
         # replace anything in mappings.keys() with its value, ignore comments
         # disallow real python
-        for key, value in GYAT2PY_MAPPINGS.items():
+        for key, value in TRPY2PY_MAPPINGS.items():
             deescaped_key = key.replace("\s+", " ")
             line = safe_substitute(value, deescaped_key, line)
             line = re.sub(r'(?<!["\'#])\b{}\b(?!["\'])'.format(key), value, line)
