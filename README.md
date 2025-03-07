@@ -1,188 +1,250 @@
-# PyGyat
-Python with rizz. Be a sigma and mog your skibidi toilet opps before they crashout. This language can only be used in Ohio.
+# TrPy
 
-Check out the [official PyGyat website](https://pygyat.vercel.app).
+Türkçe Sözdizimi Python Çeviricisi
 
-Join the [Telegram community](https://t.me/PyGyat_BrainRot)!
+> Türk milletinin dili Türkçedir. Türk dili dünyada en güzel, en zengin
+> ve en kolay olabilecek bir dildir. Onun için her Türk, dilini çok
+> sever ve onu yükseltmek için çalışır… Türk dili, Türk milleti için
+> kutsal bir hazinedir. Çünkü Türk milleti geçirdiği sayısız felaketler
+> içinde ahlâkının, geleneklerinin, hatıralarının, çıkarlarının, kısaca
+> bugün kendi milliyetini yapan her şeyin dili sayesinde korunduğunu
+> görüyor. Türk dili, Türk milletinin kalbidir, zihnidir. Mustafa Kemal
+>  — Atatürk
 
-PyGyat is a Python preprosessor which translates regular Python code into brainrot by replacing certain keywords, operators, and built in functions with iPad kid vocabulary.
+TrPy, Python sözdizimindeki kelimeleri Türkçe karşılıkları ile çeviren bir önişleyicidir.
 
-Implementation based on [Bython](https://github.com/mathialo/bython).
+[PyGyat](https://github.com/shamith09/pygyat) projesi baz alınarak geliştirilmiştir.
+  
 
-## Content of README:
-  * [Key features](#key-features)
-  * [Code example](#code-example)
-  * [Installation](#installation)
-  * [Keyword mappings](#keyword-mappings)
-  * [Quick intro](#quick-intro)
-  * [Structure of the repository](#structure-of-the-repository)
+## README İçerikleri:
 
+* [Key features](#key-features)
+
+* [Code example](#code-example)
+
+* [Installation](#installation)
+
+* [Keyword mappings](#keyword-mappings)
+
+* [Quick intro](#quick-intro)
+
+* [Structure of the repository](#structure-of-the-repository)
+
+  
+  
 
 ## Key features
 
- * Write Python using brainrot terms instead.
+  
 
- * Run PyGyat files using the `pygyat` command, just like Python.
+* Türkçe sözdizimi ile Python yaz.
 
- * Translate Python files to PyGyat and vice versa.
+  
 
- * Real Python keywords that have defined PyGyat mappings will not be allowed.
+* TrPy dosyalarını `trpy` komutu ile çalıştırabilirsin, aynı Python da çalıştırıldığı gibi.
 
- * Edit your PyGyat code with syntax highlighting with the `vscode-pygyat` extension.
+  
 
-## Code example
-![Code Example](https://github.com/shamith09/vscode-pygyat/blob/main/code-example.png?raw=true)
-Fibonacci sequence (recursively):
-```
-bop fib(n):
-  chat is this real n twin 0:
-    its giving 0
-  chat is this real n twin 1:
-    its giving 1
-  its giving fib(n fanum tax 1) rizz fib(n fanum tax 2)
-yap(fib(10))
-```
-Factorial (recursively):
-```
-bop fact(n):
-   chat is this real n twin 1:
-      its giving 1
-   its giving fact(n fanum tax 1) * n
-yap(fact(5))
-```
-## Installation
+* Python dosyalarını Türkçe sözdizimi ile yazılmış TrPy dosyalarına çevir.
 
-You can install PyGyat directly from PyPI using pip (with or without `-H`, depending on your Python installation):
+  
+
+* Gerçek Python anahtar kelimeleri, TrPy eşlemeleri ile tanımlanmışsa kullanılamaz.
+
+## Kod Örneği
+
+Fibonacci dizisi (özyinelemeli):
 
 ```
-$ pip3 install pygyat
+
+fonksiyon fib(n):
+    eğer n eşit 0:
+        döndür 0
+    değilse eğer n eşit 1:
+        döndür 1
+    yoksa:
+        döndür fib(n çıkar 1) topla fib(n çıkar 2)
+
+konuş(fib(10))
+
 ```
 
-If you for some reason want to install it from the git repository you can use `git clone` and do a local install instead:
+Faktöriyel (özyinelemeli):
 
 ```
-$ git clone https://github.com/shamith09/pygyat.git
-$ cd pygyat
+
+fonksiyon fakt(n):
+    eğer n eşit 1:
+        döndür 1
+    yoksa:
+        döndür fact(n çıkar 1) rizz n
+
+konuş(fakt(5))
+
+```
+
+## Yükleme
+ 
+ Projeyi denemek için bu adımları yapmanız gerekmektedir:
+```
+
+$ git clone https://github.com/al1can/trpy.git
+
+$ cd trpy
+
 $ pip3 install .
-```
-
-The git version is sometimes a tiny bit ahead of the PyPI version, but not significantly.
-
-To uninstall, simply run 
 
 ```
-$ pip3 uninstall pygyat
+  
+
+Yüklemeyi kaldırmak için:
+
+  
+
 ```
 
-which will undo all the changes.
+$ pip3 uninstall trpy
 
-To install the `vscode-pygyat` extension for Visual Studio Code, visit:
+```
 
-[https://marketplace.visualstudio.com/items?itemName=shamith-pasula.vscode-pygyat](https://marketplace.visualstudio.com/items?itemName=shamith-pasula.vscode-pygyat)
+  
+
+Bu işlemler tüm yüklemeleri kaldırır.
+  
 
 ## Keyword mappings
 
+  
+
 Below is a table of all of the Python keywords or operators that should be replaced by their corresponding PyGyat keyword. Python keywords that don't have a mapping or aren't in this table can just be used as is. If you want to request that a new mapping be made, please submit a pull request.
 
-| Python Keyword/Operator | PyGyat Translation          |
-|-------------------------|----------------------------------|
-| try/except/finally      | hawk/tuah/spit on that thang     |
-| return                  | its giving                       |
-| -                       | fanum tax                        |
-| +                       | rizz                             |
-| print                   | yap                              |
-| True                    | Aura                             |
-| False                   | Cooked                           |
-| def                     | bop                              |
-| while                   | let him cook                     |
-| import                  | glaze                            |
-| from                    | lock in                          |
-| class                   | skibidi                          |
-| if/elif/else            | chat is this real/yo chat/only in ohio |
-| for                     | mewing                           |
-| break                   | just put the fries in the bag bro|
-| continue                | edge                             |
-| assert                  | sus                              |
-| raise                   | crashout                         |
-| in                      | diddy                            |
-| is                      |                                  |
-| and                     |                                  |
-| or                      |                                  |
-| not                     |                                  |
-| with                    | pookie                           |
-| as                      | ahh                              |
-| global                  | GOAT                             |
-| nonlocal                | motion                           |
-| del                     | delulu                           |
-| yield                   | pause                            |
-| yield from              | pause no diddy                   |
-| None                    | NPC                              |
-| pass                    | pluh                             |
-| self                    | unc                              |
-| range                   | huzz                             |
-| >                       | sigma                            |
-| <                       | beta                             |
-| ≥                       | sigma twin                       |
-| ≤                       | beta twin                        |
-| ==                      | twin                             |
-| =                       |                                  |
-| async                   |                                  |
-| await                   |                                  |
-| open                    | mog                              |
-| read                    |                                  |
-| write                   |                                  |
-| close                   | demure                           |
-| list                    |                                  |
-| set                     |                                  |
-| dict                    |                                  |
+  Aşağıda tüm Python sözdizimleri ve operatörlerin Türkçe karşılıkları bulunmaktadır. Bu tabloda bulunmayan Python sözdizimleri aynı şekilde kullanılmaya devam edilebilir. Yeni eklemelerin yapılmasını isterseniz pull request açabilirsiniz.
 
-## Quick intro
+| Python Sözdizimi/Operatör | TrPy Çevirisi |
+| Türkçe        | Python Karşılığı |
+|---------------|------------------|
+| dene          | try              |
+| olmazsa       | except           |
+| en son da     | finally          |
+| döndür        | return           |
+| çıkar         | -                |
+| topla         | +                |
+| konuş         | print            |
+| doğru         | True             |
+| yanlış        | False            |
+| fonksiyon     | def              |
+| iken          | while            |
+| içe aktar     | import           |
+| dan           | from             |
+| sınıf         | class            |
+| eğer          | if               |
+| değilse       | elif             |
+| yoksa         | else             |
+| için          | for              |
+| durdur        | break            |
+| devam         | continue         |
+| teyit         | assert           |
+| fırlat        | raise            |
+| ile           | with             |
+| olarak        | as               |
+| genel         | global           |
+| nâyerel       | nonlocal         |
+| sil           | del              |
+| burdan gönder | yield from       |
+| gönder        | yield            |
+| Hiç           | None             |
+| kendi         | self             |
+| aralık        | range            |
+| büyük eşit    | >=               |
+| küçük eşit    | <=               |
+| eşit          | ==               |
+| büyüktür      | >                |
+| küçüktür      | <                |
+| içinde        | in               |
+| geç           | pass             |
+| aç            | open             |
+| kapat         | close            |
+| ve            | and              |
+| ya da         | or               |
 
-PyGyat works by first translating PyGyat files (suggested file ending: .gyat) into Python-files, and then using Python to run them. You therefore need a working installation of Python for PyGyat to work.
+  
+
+## Hızlı Giriş
+
+  
+TrPy, TrPy dosyalarını (önerilen dosya uzantısı: `.trpy`) önce Python dosyalarına çevirir ve ardından Python kullanarak çalıştırır. Bu yüzden TrPy'nin çalışabilmesi için geçerli bir Python kurulumuna ihtiyacınız vardır.
+  
+ Bir TrPy programını çalıştırmak için, sadece aşağıdaki komutu yazabilirsiniz:
 
 
-To run a PyGyat program, simply type
-
-```
-$ pygyat source.gyat arg1 arg2 ...
-```
-
-to run `source.gyat` with arg1, arg2, ... as command line arguments. If you want more details on how to run PyGyat files (flags, etc), type
+  
 
 ```
-$ pygyat -h
-```
 
-to print the built-in help page. You can also consult the man page by typing
+$ trpy source.gyat arg1 arg2 ...
 
 ```
-$ man pygyat
-```
 
-PyGyat also includes a translator from Python to PyGyat. This is found via the `py2gyat` command:
+  
+Bu komut, `source.trpy` dosyasını arg1, arg2 gibi komut satırı argümanları ile çalıştırır. TrPy dosyalarını çalıştırmak için daha fazla bilgi edinmek için:
 
-```
-$ py2gyat test.py
-```
-
-This will create a PyGyat file called `test.gyat`. A full explanation of `py2gyat`, is found by typing
+  
 
 ```
-$ py2gyat -h
-```
 
-or by consulting the man page:
+$ trpy -h
 
 ```
-$ man py2gyat
+
+  
+komutunu kullanarak yardım sayfasını görüntüleyebilirsiniz. Ayrıca `man` sayfasını da şu şekilde görebilirsiniz:
+  
+
 ```
 
-## Structure of the repository
+$ man trpy
 
-At the moment, PyGyat is written in Python. The git repository is structured into 4 directories:
+```
 
- * `pygyat` contains a Python package containing the parser and other utilities used by the main script
- * `etc` contains manual pages and other auxillary files
- * `scripts` contains the runnable Python scripts, ie the ones run from the shell
- * `testcases` contains a couple of sample \*.gyat and \*.py files intended for testing the implementation
- * [`vscode-pygyat`](https://github.com/shamith09/vscode-pygyat) contains the Visual Studio Code extension that enables syntax highlighting in VS Code.
+TrPy, ayrıca Python'dan TrPy'ye dönüştürücü içerir. Bu `py2trpy` komutu ile yapılabilir:
+
+  
+
+```
+
+$ py2trpy test.py
+
+```
+
+  
+Bu, `test.gyat` adında bir TrPy dosyası oluşturur. `py2trpy` komutunun tam açıklamasına, şu komutla ulaşabilirsiniz:
+ 
+```
+
+$ py2trpy -h
+
+```
+
+  
+
+Ya da `man` sayfasını şu komutla açabilirsiniz:
+  
+
+```
+
+$ man py2trpy
+
+```
+
+  
+
+## Proje Yapısı
+
+  
+
+Şu an TrPy, Python dilinde yazılmıştır. Git deposu 4 dizinden oluşmaktadır:
+  
+-   `trpy`: Ana script tarafından kullanılan parser ve diğer yardımcı araçları içeren Python paketi.
+-   `etc`: Manuel sayfalar ve diğer yardımcı dosyalar.
+-   `scripts`: Shell'den çalıştırılabilen Python scriptlerini içerir.
+-   `testcases`: Test amacıyla kullanılan bazı örnek `.trpy` ve `.py` dosyalarını içerir.
