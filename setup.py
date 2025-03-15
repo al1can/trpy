@@ -19,7 +19,7 @@ setup(name="trpy",  # Türkçe Python kütüphanesi ismi
         "Türk dili, Türk milletinin kalbidir, zihnidir.",
       long_description=long_description,
       long_description_content_type="text/markdown",
-      url="https://github.com/al1can/türkçe_python",  # GitHub URL'si de değiştirildi
+      url="https://github.com/al1can/trpy",  # GitHub URL'si de değiştirildi
       scripts=["scripts/trpy2py", "scripts/trpy", "scripts/py2trpy"],  # Türkçe versiyon script'leri
       data_files=[("man/man1", ["etc/trpy.1", "etc/py2trpy.1", "etc/trpy2py.1"])],
       packages=["trpy"],  # Türkçe Python kütüphanesi ismi olarak trpy
